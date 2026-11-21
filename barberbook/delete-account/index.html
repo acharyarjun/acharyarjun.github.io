@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eliminar cuenta · Barberbook</title>
+  <style>
+    body { margin: 0; font-family: Georgia, serif; background: #f3eee6; color: #1c1714; }
+    main { max-width: 42rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    a { color: #1b3a32; }
+    input, button { font: inherit; }
+    input { width: 100%; box-sizing: border-box; padding: .7rem; border: 1px solid #e3d8c8; border-radius: .7rem; }
+    button { margin-top: 1rem; background: #8a3030; color: white; border: 0; border-radius: 999px; padding: .7rem 1rem; }
+    p { line-height: 1.55; }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="../">Barberbook</a></p>
+    <h1>Eliminar tu cuenta</h1>
+    <p>Puedes pedir la supresión de tu cuenta de Barberbook aquí. Si has iniciado sesión en la app, el botón «Eliminar cuenta» la cierra al momento. Desde esta página registramos la solicitud y la atiende Arjun Acharya (<a href="mailto:arjunacharya43@gmail.com">arjunacharya43@gmail.com</a>).</p>
+    <p>Se borran el acceso, el perfil y los datos de contacto. Las facturas ya emitidas se conservan el plazo fiscal, sin reescribirlas.</p>
+    <form id="form">
+      <label>Email de la cuenta<br /><input type="email" name="email" required /></label>
+      <label style="display:flex;gap:.5rem;margin-top:1rem"><input type="checkbox" name="ok" required style="width:auto" /> Confirmo que pido la supresión.</label>
+      <button type="submit">Enviar solicitud</button>
+    </form>
+    <p id="out"></p>
+    <h2>Delete your account</h2>
+    <p>Send the email of the Barberbook account you want deleted. Signed-in users can also delete it inside the app. Issued invoices are kept for the tax period.</p>
+    <script>
+      document.getElementById("form").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        var email = new FormData(event.target).get("email");
+        var out = document.getElementById("out");
+        try {
+          var res = await fetch("https://pgvgkvslitroyznvmycc.supabase.co/functions/v1/delete-account", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              apikey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBndmdrdnNsaXRyb3l6bnZteWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyODEwNzEsImV4cCI6MjExMDg1NzA3MX0.LIyfswrVuXu4ut48LEOpOS8wBFM3wi5bJtNXXXTg2lM",
+              authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBndmdrdnNsaXRyb3l6bnZteWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTUyODEwNzEsImV4cCI6MjExMDg1NzA3MX0.LIyfswrVuXu4ut48LEOpOS8wBFM3wi5bJtNXXXTg2lM"
+            },
+            body: JSON.stringify({ email: email, request: true })
+          });
+          out.textContent = res.ok
+            ? "Solicitud registrada. También puedes escribir a arjunacharya43@gmail.com."
+            : "No se ha podido registrar. Escribe a arjunacharya43@gmail.com.";
+        } catch (err) {
+          out.textContent = "Sin conexión con el servidor. Escribe a arjunacharya43@gmail.com.";
+        }
+      });
+    </script>
+  </main>
+</body>
+</html>

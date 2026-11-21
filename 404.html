@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página no encontrada</title>
+  <style>
+    body { margin: 0; font-family: Georgia, "Segoe UI", sans-serif; background: #f3efe6; color: #1c2430; }
+    main { max-width: 40rem; margin: 0 auto; padding: 3rem 1.2rem 4rem; }
+    a { color: #8e1d2c; }
+  </style>
+  <script>
+    (function () {
+      var path = window.location.pathname;
+      if (path === "/barberbook" || path.indexOf("/barberbook/") === 0) {
+        var pathSegmentsToKeep = 1;
+        var l = window.location;
+        l.replace(
+          l.protocol + "//" + l.hostname + (l.port ? ":" + l.port : "") +
+          l.pathname.split("/").slice(0, 1 + pathSegmentsToKeep).join("/") +
+          "/?/" +
+          l.pathname.slice(1).split("/").slice(pathSegmentsToKeep).join("/").replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+        );
+      }
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Página no encontrada</h1>
+    <p>Esa dirección no existe. Puedes volver al <a href="/">inicio</a>, a la <a href="/privacy/">política de privacidad de CCSE</a>, a la de <a href="/nasdaq/privacy/">Smart Investment NASDAQ</a> o a <a href="/barberbook/">Barberbook</a>.</p>
+  </main>
+</body>
+</html>
